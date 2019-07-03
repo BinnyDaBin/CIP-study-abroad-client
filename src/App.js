@@ -9,10 +9,9 @@ const App = () => {
 
   // Get courses
   const getCourses = async () => {
-    const res = await axios.get('http://localhost:5000/courses');
+    const coursesResponse = await axios.get('http://localhost:5000/courses');
 
-    console.log(res.data);
-    setCourses(res.data);
+    setCourses(coursesResponse.data);
   };
 
   return (

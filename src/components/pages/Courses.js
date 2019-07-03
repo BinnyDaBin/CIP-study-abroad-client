@@ -4,7 +4,7 @@ const Courses = ({ getCourses, courses }) => {
   useEffect(() => {
     getCourses();
     // eslint-disable-next-line
-  }, []);
+  });
 
   return (
     <Fragment>
