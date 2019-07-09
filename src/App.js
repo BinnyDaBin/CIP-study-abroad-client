@@ -1,26 +1,36 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Fragment, useState } from 'react';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+// import axios from 'axios';
+import Home from './components/pages/Home';
+import Courses from './components/pages/Courses';
+import Requestor from './components/Requestor';
 
-function App() {
+const App = () => {
+  const [courses, setCourses] = useState('');
+
+  // Get courses
+  const getCourses = async () => {
+    const coursesResponse = await Requestor.get('/courses');
+
+    setCourses(coursesResponse.data);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Switch>
+        <Route exact path='/' component={Home} />
+        <Route
+          exact
+          path='/courses'
+          render={props => (
+            <Fragment>
+              <Courses getCourses={getCourses} courses={courses} />
+            </Fragment>
+          )}
+        />
+      </Switch>
+    </Router>
   );
-}
+};
 
 export default App;
