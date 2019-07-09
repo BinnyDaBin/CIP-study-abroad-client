@@ -1,15 +1,16 @@
 import React, { Fragment, useState } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import axios from 'axios';
+// import axios from 'axios';
 import Home from './components/pages/Home';
 import Courses from './components/pages/Courses';
+import Requestor from './components/Requestor';
 
 const App = () => {
   const [courses, setCourses] = useState('');
 
   // Get courses
   const getCourses = async () => {
-    const coursesResponse = await axios.get('http://localhost:5000/courses');
+    const coursesResponse = await Requestor.get('/courses');
 
     setCourses(coursesResponse.data);
   };
