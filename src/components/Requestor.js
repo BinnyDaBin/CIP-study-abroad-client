@@ -1,6 +1,11 @@
 import axios from 'axios';
-// import { SERVER_URL } from '/environments';
 const SERVER_URL = 'http://localhost:5000';
+
+const DEFAULT_PARAMS = {
+  filters: {},
+  offset: 0,
+  size: 10
+};
 
 export const Requestor = {
   get(url, config, params) {
@@ -10,6 +15,10 @@ export const Requestor = {
     return axios.get(`${SERVER_URL}${url}`, {
       headers: {
         ...config
+      },
+      params: {
+        ...DEFAULT_PARAMS,
+        ...params
       }
     });
   }
