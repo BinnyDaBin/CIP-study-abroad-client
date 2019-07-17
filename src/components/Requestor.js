@@ -8,7 +8,7 @@ const DEFAULT_PARAMS = {
 };
 
 export const Requestor = {
-  get(url, config, params) {
+  get(url, config = {}, params = {}) {
     if (!url || url[0] !== '/') {
       return Promise.reject('Url should be prefixed with slash');
     }

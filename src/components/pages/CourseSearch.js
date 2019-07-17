@@ -11,7 +11,15 @@ const CourseSearch = () => {
   });
 
   const getCourses = async () => {
-    const coursesResponse = await Requestor.get('/courses');
+    const coursesResponse = await Requestor.get(
+      '/courses',
+      {},
+      {
+        filters: {},
+        offset: 0,
+        size: 5
+      }
+    );
     setCourses(coursesResponse.data);
   };
 
