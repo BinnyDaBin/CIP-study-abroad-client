@@ -10,14 +10,21 @@ const CourseSearch = () => {
     // eslint-disable-next-line
   });
 
-  const getCourses = async () => {
+  const DEFAULT_PARAMS = {
+    filters: {},
+    offset: 0,
+    size: 10
+  };
+
+  const getCourses = async ({ filters, offset, size } = DEFAULT_PARAMS) => {
     const coursesResponse = await Requestor.get(
       '/courses',
       {},
       {
-        filters: {},
-        offset: 0,
-        size: 5
+        ...DEFAULT_PARAMS,
+        filters,
+        offset,
+        size
       }
     );
     setCourses(coursesResponse.data);
@@ -25,21 +32,21 @@ const CourseSearch = () => {
 
   const showCourses = courses.map(course => (
     <tr key={course.id}>
-      <th>{course.id}</th>
-      <th>{course.study_abroad_institution}</th>
-      <th>{course.program_name}</th>
-      <th>{course.year}</th>
-      <th>{course.kzoo_course_name}</th>
-      <th>{course.kzoo_discipline}</th>
-      <th>{course.host_insti_course_number}</th>
-      <th>{course.host_insti_course_name}</th>
+      <td>{course.id}</td>
+      <td>{course.studyAbroadInstitution}</td>
+      <td>{course.programName}</td>
+      <td>{course.year}</td>
+      <td>{course.kzooCourseName}</td>
+      <td>{course.kzooDiscipline}</td>
+      <td>{course.hostInstiCourseNumber}</td>
+      <td>{course.hostInstiCourseName}</td>
     </tr>
   ));
 
   return (
     <Fragment>
       <table style={{ width: '100%' }}>
-        <tbody>
+        <thead>
           <tr>
             <th>ID</th>
             <th>Study Abroad Institution</th>
@@ -50,8 +57,8 @@ const CourseSearch = () => {
             <th>Host Institution Course Number</th>
             <th>Host Institution Course Name</th>
           </tr>
-          {showCourses}
-        </tbody>
+        </thead>
+        <tbody>{showCourses}</tbody>
       </table>
     </Fragment>
   );

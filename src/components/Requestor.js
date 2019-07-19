@@ -1,12 +1,6 @@
 import axios from 'axios';
 const SERVER_URL = 'http://localhost:5000';
 
-const DEFAULT_PARAMS = {
-  filters: {},
-  offset: 0,
-  size: 10
-};
-
 export const Requestor = {
   get(url, config = {}, params = {}) {
     if (!url || url[0] !== '/') {
@@ -17,7 +11,6 @@ export const Requestor = {
         ...config
       },
       params: {
-        ...DEFAULT_PARAMS,
         ...params
       }
     });
