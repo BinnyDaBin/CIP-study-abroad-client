@@ -1,5 +1,8 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import Requestor from '../Requestor';
+import Table from '../courses/Table';
+import colConfig from '../courses/course.constant';
+import config from '../courses/config';
 
 const CourseSearch = () => {
   const [courses, setCourses] = useState([]);
@@ -30,36 +33,9 @@ const CourseSearch = () => {
     setCourses(coursesResponse.data);
   };
 
-  const showCourses = courses.map(course => (
-    <tr key={course.id}>
-      <td>{course.id}</td>
-      <td>{course.studyAbroadInstitution}</td>
-      <td>{course.programName}</td>
-      <td>{course.year}</td>
-      <td>{course.kzooCourseName}</td>
-      <td>{course.kzooDiscipline}</td>
-      <td>{course.hostInstiCourseNumber}</td>
-      <td>{course.hostInstiCourseName}</td>
-    </tr>
-  ));
-
   return (
     <Fragment>
-      <table style={{ width: '100%' }}>
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Study Abroad Institution</th>
-            <th>Program Name</th>
-            <th>year</th>
-            <th>Kzoo Course Name</th>
-            <th>Kzoo Discipline</th>
-            <th>Host Institution Course Number</th>
-            <th>Host Institution Course Name</th>
-          </tr>
-        </thead>
-        <tbody>{showCourses}</tbody>
-      </table>
+      <Table config={config} colConfig={colConfig} data={courses} />
     </Fragment>
   );
 };

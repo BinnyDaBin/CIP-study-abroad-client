@@ -32,3 +32,5 @@ export const coursesColumnConfig = [
     display: 'Host Institution Course Name'
   }
 ];
+
+export default coursesColumnConfig;
