@@ -1,4 +1,4 @@
-export const coursesColumnConfig = [
+export const COURSES_COLUMN_CONFIG = Object.freeze([
   {
     id: 'id',
     display: 'ID'
@@ -31,4 +31,4 @@ export const coursesColumnConfig = [
     id: 'hostInstiCourseName',
     display: 'Host Institution Course Name'
   }
-];
+]);
