@@ -1,20 +1,9 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-// import axios from 'axios';
 import Home from './components/pages/Home';
-import Courses from './components/pages/Courses';
-import Requestor from './components/Requestor';
+import CourseSearch from './components/pages/CourseSearch';
 
 const App = () => {
-  const [courses, setCourses] = useState('');
-
-  // Get courses
-  const getCourses = async () => {
-    const coursesResponse = await Requestor.get('/courses');
-
-    setCourses(coursesResponse.data);
-  };
-
   return (
     <Router>
       <Switch>
@@ -24,7 +13,7 @@ const App = () => {
           path='/courses'
           render={props => (
             <Fragment>
-              <Courses getCourses={getCourses} courses={courses} />
+              <CourseSearch />
             </Fragment>
           )}
         />
