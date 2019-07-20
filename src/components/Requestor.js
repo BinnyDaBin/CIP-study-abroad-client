@@ -7,12 +7,8 @@ export const Requestor = {
       return Promise.reject('Url should be prefixed with slash');
     }
     return axios.get(`${SERVER_URL}${url}`, {
-      headers: {
-        ...config
-      },
-      params: {
-        ...params
-      }
+      headers: config,
+      params
     });
   }
 };
