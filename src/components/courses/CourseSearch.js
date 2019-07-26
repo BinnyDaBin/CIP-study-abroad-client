@@ -3,6 +3,7 @@ import Requestor from '../Requestor';
 import SimpleTable from '../table/Table';
 import { COURSES_COLUMN_CONFIG } from './course.constant';
 import { CONFIG as TABLE_CONFIG } from './config';
+import _ from 'lodash';
 
 const CourseSearch = () => {
   const [courses, setCourses] = useState([]);
@@ -14,8 +15,9 @@ const CourseSearch = () => {
   const [selects, setSelects] = useState({});
 
   useEffect(() => {
+    // console.log(filters);
     const params = {
-      filters: filters,
+      filters: _.pickBy(filters, filter => filter.length > 0),
       offset: currentPage,
       size: coursesPerPage
     };
@@ -38,11 +40,11 @@ const CourseSearch = () => {
 
     const courses = coursesResponse.data.result;
     const totalCourses = coursesResponse.data.meta.length;
-    const allColumnOptions = coursesResponse.data.columnOptions;
+    const columnSelectOptions = coursesResponse.data.columnOptions;
 
     setCourses(courses);
     setTotalCourses(totalCourses);
-    setSelects(allColumnOptions);
+    setSelects(columnSelectOptions);
     // setLoading(false);
   };
 

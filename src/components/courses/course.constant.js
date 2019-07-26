@@ -1,8 +1,4 @@
 export const COURSES_COLUMN_CONFIG = Object.freeze([
-  // {
-  //   id: 'id',
-  //   display: 'ID'
-  // },
   {
     id: 'studyAbroadInstitution',
     display: 'Study Abroad Institution'
