@@ -15,9 +15,8 @@ const CourseSearch = () => {
   const [selects, setSelects] = useState({});
 
   useEffect(() => {
-    // console.log(filters);
     const params = {
-      filters: _.pickBy(filters, filter => filter.length > 0),
+      filters,
       offset: currentPage,
       size: coursesPerPage
     };
@@ -32,7 +31,7 @@ const CourseSearch = () => {
       '/courses',
       {},
       {
-        filters,
+        filters: _.omitBy(filters, _.isEmpty),
         offset,
         size
       }

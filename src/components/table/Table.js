@@ -178,6 +178,7 @@ const SimpleTable = ({
 
   const handleFilterChange = (event, filterType) => {
     setFilters({ ...filters, [filterType]: event.target.value });
+    onPaginate(0);
   };
 
   const theadMarkup = (
