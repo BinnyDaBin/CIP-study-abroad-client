@@ -38,7 +38,7 @@ const CourseSearch = () => {
     );
 
     const courses = coursesResponse.data.result;
-    const totalCourses = coursesResponse.data.meta.length;
+    const totalCourses = coursesResponse.data.totalLength;
     const columnSelectOptions = coursesResponse.data.columnOptions;
 
     setCourses(courses);
