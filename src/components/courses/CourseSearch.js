@@ -22,8 +22,11 @@ const CourseSearch = () => {
     };
 
     getCourses(params);
-    getColumnOptions();
   }, [filters, currentPage, coursesPerPage]);
+
+  useEffect(() => {
+    getColumnOptions();
+  }, []);
 
   const getCourses = async ({ filters, offset, size }) => {
     // setLoading(true);
@@ -53,9 +56,7 @@ const CourseSearch = () => {
       {}
     );
 
-    const columnOptions = columnOptionsResponse.data;
-
-    setSelects(columnOptions);
+    setSelects(columnOptionsResponse.data);
   };
 
   const onPaginate = newPage => {
