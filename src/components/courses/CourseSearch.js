@@ -24,6 +24,10 @@ const CourseSearch = () => {
     getCourses(params);
   }, [filters, currentPage, coursesPerPage]);
 
+  useEffect(() => {
+    getColumnOptions();
+  }, []);
+
   const getCourses = async ({ filters, offset, size }) => {
     // setLoading(true);
 
@@ -38,13 +42,21 @@ const CourseSearch = () => {
     );
 
     const courses = coursesResponse.data.result;
-    const totalCourses = coursesResponse.data.meta.length;
-    const columnSelectOptions = coursesResponse.data.columnOptions;
+    const totalCourses = coursesResponse.data.totalLength;
 
     setCourses(courses);
     setTotalCourses(totalCourses);
-    setSelects(columnSelectOptions);
     // setLoading(false);
+  };
+
+  const getColumnOptions = async () => {
+    const columnOptionsResponse = await Requestor.get(
+      '/courseColumnOptions',
+      {},
+      {}
+    );
+
+    setSelects(columnOptionsResponse.data);
   };
 
   const onPaginate = newPage => {
