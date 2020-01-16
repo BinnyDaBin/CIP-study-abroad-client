@@ -15,11 +15,9 @@ const config = {
   'Content-Type': 'application/json'
 };
 
-export const register = user => async dispatch => {
+export const register = async (dispatch, user) => {
   try {
     const response = await Requestor.post('/users', config, user);
-
-    window.location = '/confirmation-send';
 
     dispatch({
       type: REGISTER_SUCCESS,
@@ -33,18 +31,16 @@ export const register = user => async dispatch => {
   }
 };
 
-export const login = user => async dispatch => {
+export const login = async (dispatch, user) => {
   try {
     const response = await Requestor.post('/auth', config, user);
-
-    window.location = '/';
 
     dispatch({
       type: LOGIN_SUCCESS,
       payload: response.data
     });
 
-    loadUser();
+    loadUser(dispatch);
   } catch (error) {
     dispatch({
       type: LOGIN_FAIL,
@@ -53,9 +49,9 @@ export const login = user => async dispatch => {
   }
 };
 
-export const logout = () => dispatch => dispatch({ type: LOGOUT });
+export const logout = (dispatch) => dispatch({ type: LOGOUT });
 
-export const loadUser = () => async dispatch => {
+export const loadUser = async dispatch => {
   if (localStorage.token) {
     setAuthToken(localStorage.token);
   }

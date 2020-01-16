@@ -4,7 +4,6 @@ import { Provider } from 'react-redux';
 import store from './store';
 import PrivateRoute from './components/routing/PrivateRoute';
 import Container from '@material-ui/core/Container';
-import Home from './components/pages/Home';
 import CourseSearch from './components/courses/CourseSearch';
 import Login from './components/auth/Login';
 import Navbar from './components/layout/Navbar';
@@ -12,7 +11,6 @@ import Alerts from './components/layout/Alerts';
 import Register from './components/auth/Register';
 import ConfirmationSend from './components/auth/ConfirmationSend';
 import ConfirmationSuccess from './components/auth/ConfirmationSuccess';
-import ForgotPassword from './components/auth/ForgotPassword';
 
 import setAuthToken from './utils/setAuthToken';
 
@@ -29,14 +27,13 @@ const App = () => {
           <Container maxWidth='lg' style={{ marginTop: 100 }}>
             <Alerts />
             <Switch>
-              <PrivateRoute exact path='/' component={Home} />
               <PrivateRoute exact path='/courses' component={CourseSearch} />
               <Route
                 exact
-                path='/login'
+                path='/'
                 render={props => (
                   <Fragment>
-                    <Login />
+                    <Login {...props}/>
                   </Fragment>
                 )}
               />
@@ -45,7 +42,7 @@ const App = () => {
                 path='/register'
                 render={props => (
                   <Fragment>
-                    <Register />
+                    <Register {...props}/>
                   </Fragment>
                 )}
               />
@@ -64,15 +61,6 @@ const App = () => {
                 render={props => (
                   <Fragment>
                     <ConfirmationSuccess token={props.match.params.token} />
-                  </Fragment>
-                )}
-              />
-              <Route
-                exact
-                path='/forgot-password'
-                render={props => (
-                  <Fragment>
-                    <ForgotPassword />
                   </Fragment>
                 )}
               />

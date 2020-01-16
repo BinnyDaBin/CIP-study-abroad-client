@@ -14,18 +14,25 @@ const initialState = {
   isAuthenticated: false,
   loading: true,
   error: null,
-  user: null
+  user: null,
+  confirmationSent: false
 };
 
 export default (state = initialState, action) => {
   switch (action.type) {
     case REGISTER_SUCCESS:
+      return {
+        ...state,
+        ...action.payload,
+        loading: false,
+        confirmationSent: true
+      };
     case LOGIN_SUCCESS:
       localStorage.setItem('token', action.payload.token);
       return {
         ...state,
         ...action.payload,
-        isAuthenticated: false,
+        isAuthenticated: true,
         loading: false
       };
     case REGISTER_FAIL:
@@ -37,9 +44,10 @@ export default (state = initialState, action) => {
         ...state,
         token: null,
         isAuthenticated: false,
-        loading: true,
+        loading: false,
+        user: null, 
         error: action.payload,
-        user: null
+        confirmationSent: false
       };
     case CLEAR_ERRORS:
       return {

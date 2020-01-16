@@ -18,7 +18,7 @@ const variantIcon = {
   info: InfoIcon
 };
 
-const useStyles1 = makeStyles(theme => ({
+const useStyles = makeStyles(theme => ({
   success: {
     backgroundColor: green[600]
   },
@@ -45,7 +45,7 @@ const useStyles1 = makeStyles(theme => ({
 }));
 
 function MySnackbarContentWrapper(props) {
-  const classes = useStyles1();
+  const classes = useStyles();
   const { className, message, onClose, variant, ...other } = props;
   const Icon = variantIcon[variant];
 

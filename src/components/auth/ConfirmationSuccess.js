@@ -15,15 +15,15 @@ const ConfirmationSuccess = token => {
   }, [confirmed]);
 
   const confirmEmail = async () => {
-    await Requestor.put('/users/confirmation', config, token).then(
-      setConfirmed(true)
-    );
+    await Requestor.put('/users/confirmation', config, token)
+    .then(setConfirmed(true))
+    .catch(() => setConfirmed(false));
   };
 
   const success = (
     <Fragment>
       <h1>Successfully confirmed your email! Please login.</h1>
-      <Button color='inherit' component={Link} to='/login'>
+      <Button color='inherit' component={Link} to='/'>
         Go to Login page
       </Button>
     </Fragment>

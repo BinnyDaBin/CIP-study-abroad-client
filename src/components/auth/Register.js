@@ -5,34 +5,17 @@ import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-
 import { setAlert } from '../../actions/alertAction';
 import { register, clearErrors } from '../../actions/authAction';
-
-const Copyright = () => {
-  return (
-    <Typography variant='body2' color='textSecondary' align='center'>
-      {'Copyright © '}
-      <Link color='inherit' href='https://material-ui.com/'>
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'. Built with '}
-      <Link color='inherit' href='https://material-ui.com/'>
-        Material-UI.
-      </Link>
-    </Typography>
-  );
-};
+import {useDispatch} from 'react-redux';
+import {useAuth} from '../../hooks';
+import {useHistory} from 'react-router-dom';
 
 const useStyles = makeStyles(theme => ({
   '@global': {
@@ -59,14 +42,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Register = ({ setAlert, auth: { error }, register, clearErrors }) => {
-  useEffect(() => {
-    if (error === 'User already exists') {
-      setAlert(error, 'error');
-      clearErrors();
-    }
-  }, [error]);
-
+const Register = () => {
   const [user, setUser] = useState({
     firstName: '',
     lastName: '',
@@ -75,7 +51,24 @@ const Register = ({ setAlert, auth: { error }, register, clearErrors }) => {
     passwordConfirm: ''
   });
 
+  const dispatch = useDispatch();
+  const { confirmationSent, error } = useAuth();
+  const history = useHistory();
+
   const { firstName, lastName, email, password, passwordConfirm } = user;
+
+  useEffect(() => {
+    if( confirmationSent ) {
+      history.push('/confirmation-send');
+    }
+  }, [confirmationSent]);
+
+  useEffect(() => {
+    if (error === 'Invalid Credentials') {
+      setAlert(error, 'error');
+      clearErrors();
+    }
+  }, [error]);
 
   const onChange = e => setUser({ ...user, [e.target.name]: e.target.value });
 
@@ -94,10 +87,10 @@ const Register = ({ setAlert, auth: { error }, register, clearErrors }) => {
       setAlert('Passwords do not match', 'error');
     } else if (!email.endsWith('@kzoo.edu')) {
       setAlert('Please use kzoo email address', 'error');
-    } else if (password.length < 7) {
+    } else if (password.length < 6) {
       setAlert('Password should be more than 6 characters', 'error');
     } else {
-      register(user);
+      register(dispatch, user);
     }
   };
 
@@ -180,10 +173,6 @@ const Register = ({ setAlert, auth: { error }, register, clearErrors }) => {
             onChange={onChange}
             autoComplete='current-password'
           />
-          <FormControlLabel
-            control={<Checkbox value='remember' color='primary' />}
-            label='Remember me'
-          />
           <Button
             type='submit'
             fullWidth
@@ -203,22 +192,8 @@ const Register = ({ setAlert, auth: { error }, register, clearErrors }) => {
           </Grid>
         </form>
       </div>
-      <Box mt={8}>
-        <Copyright />
-      </Box>
     </Container>
   );
 };
 
-Register.propTypes = {
-  auth: PropTypes.object.isRequired
-};
-
-const mapStateToProps = state => ({
-  auth: state.auth
-});
-
-export default connect(
-  mapStateToProps,
-  { setAlert, register, clearErrors }
-)(Register);
+export default Register;
