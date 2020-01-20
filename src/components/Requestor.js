@@ -10,6 +10,22 @@ export const Requestor = {
       headers: config,
       params
     });
+  },
+  post(url, config = {}, body = {}) {
+    if (!url || url[0] !== '/') {
+      return Promise.reject('Url should be prefixed with slash');
+    }
+    return axios.post(`${SERVER_URL}${url}`, body, {
+      headers: config
+    });
+  },
+  put(url, config = {}, body = {}) {
+    if (!url || url[0] !== '/') {
+      return Promise.reject('Url should be prefixed with slash');
+    }
+    return axios.put(`${SERVER_URL}${url}`, body, {
+      headers: config
+    });
   }
 };
 
