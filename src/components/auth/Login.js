@@ -13,9 +13,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { setAlert } from '../../actions/alertAction';
 import { login, clearErrors } from '../../actions/authAction';
-import {useDispatch} from 'react-redux';
-import {useAuth} from '../../hooks';
-import {useHistory} from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { useAuth } from '../../hooks';
+import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles(theme => ({
   '@global': {
@@ -61,8 +61,8 @@ const Login = () => {
   }, [isAuthenticated]);
 
   useEffect(() => {
-    if (error === 'Invalid Credentials') {
-      setAlert(error, 'error');
+    if (error !== null && error.length > 0) {
+      setAlert(dispatch, error, 'error');
       clearErrors();
     }
   }, [error]);
@@ -73,7 +73,7 @@ const Login = () => {
     e.preventDefault();
 
     if (email === '' || password === '') {
-      setAlert('Please enter all fields', 'error');
+      setAlert(dispatch, 'Please enter all fields', 'error');
     } else {
       login(dispatch, user);
     }

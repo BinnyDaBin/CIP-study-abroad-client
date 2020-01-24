@@ -10,6 +10,9 @@ import IconButton from '@material-ui/core/IconButton';
 import SnackbarContent from '@material-ui/core/SnackbarContent';
 import WarningIcon from '@material-ui/icons/Warning';
 import { makeStyles } from '@material-ui/core/styles';
+import { useAlert } from '../../hooks';
+
+// TODO: Change all styling
 
 const variantIcon = {
   success: CheckCircleIcon,
@@ -79,7 +82,9 @@ MySnackbarContentWrapper.propTypes = {
   variant: PropTypes.oneOf(['error', 'info', 'success', 'warning']).isRequired
 };
 
-const Alerts = ({ alert }) => {
+const Alerts = () => {
+  const alert = useAlert();
+
   return (
     alert.length > 0 &&
     alert.map(alert => (
@@ -92,12 +97,4 @@ const Alerts = ({ alert }) => {
   );
 };
 
-Alerts.propTypes = {
-  alert: PropTypes.array.isRequired
-};
-
-const mapStateToProps = state => ({
-  alert: state.alert
-});
-
-export default connect(mapStateToProps)(Alerts);
+export default Alerts;

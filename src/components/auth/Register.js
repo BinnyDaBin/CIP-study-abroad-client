@@ -13,9 +13,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { setAlert } from '../../actions/alertAction';
 import { register, clearErrors } from '../../actions/authAction';
-import {useDispatch} from 'react-redux';
-import {useAuth} from '../../hooks';
-import {useHistory} from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { useAuth } from '../../hooks';
+import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles(theme => ({
   '@global': {
@@ -64,8 +64,8 @@ const Register = () => {
   }, [confirmationSent]);
 
   useEffect(() => {
-    if (error === 'Invalid Credentials') {
-      setAlert(error, 'error');
+    if (error !== null && error.length > 0) {
+      setAlert(dispatch, error, 'error');
       clearErrors();
     }
   }, [error]);
@@ -82,13 +82,13 @@ const Register = () => {
       password === '' ||
       passwordConfirm === ''
     ) {
-      setAlert('Please enter all fields', 'error');
+      setAlert(dispatch, 'Please enter all fields', 'error');
     } else if (password !== passwordConfirm) {
-      setAlert('Passwords do not match', 'error');
+      setAlert(dispatch, 'Passwords do not match', 'error');
     } else if (!email.endsWith('@kzoo.edu')) {
-      setAlert('Please use kzoo email address', 'error');
+      setAlert(dispatch, 'Please use kzoo email address', 'error');
     } else if (password.length < 6) {
-      setAlert('Password should be more than 6 characters', 'error');
+      setAlert(dispatch, 'Password should be more than 6 characters', 'error');
     } else {
       register(dispatch, user);
     }
